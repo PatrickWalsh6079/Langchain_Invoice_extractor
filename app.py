@@ -14,7 +14,7 @@ def main():
     pdf = st.file_uploader("Upload invoices here, only PDF files allowed", type=["pdf"], accept_multiple_files=True)
 
     submit = st.button("Extract Data")
-
+    data_dict = {}
     if submit:
         with st.spinner('Wait for it...'):
             df = create_docs(pdf)

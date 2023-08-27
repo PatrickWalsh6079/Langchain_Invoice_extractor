@@ -1,4 +1,3 @@
-
 from langchain.llms import OpenAI
 from pypdf import PdfReader
 from langchain.llms.openai import OpenAI
@@ -27,20 +26,24 @@ def extracted_data(pages_data):
         """
     prompt_template = PromptTemplate(input_variables=["pages"], template=template)
 
-    llm = OpenAI(temperature=.7)
-    full_response = llm(prompt_template.format(pages=pages_data))
+    # llm = OpenAI(temperature=.7)
+    # full_response = llm(prompt_template.format(pages=pages_data))
 
     # The below code will be used when we want to use LLAMA 2 model,  we will use Replicate for hosting our model...
 
-    # output = replicate.run('replicate/llama-2-70b-chat:2c1608e18606fad2812020dc541930f2d0495ce32eee50074220b87300bc16e1',
-    # input={"prompt":prompt_template.format(pages=pages_data) ,
-    # "temperature":0.1, "top_p":0.9, "max_length":512, "repetition_penalty":1})
+    output = replicate.run(
+        'replicate/llama-2-70b-chat:2796ee9483c3fd7aa2e171d38f4ca12251a30609463dcfd4cd76703f22e96cdf',
+        input={"prompt": prompt_template.format(pages=pages_data),
+               "temperature": 0.1,
+               "top_p": 0.9,
+               "max_length": 512,
+               "repetition_penalty": 1})
 
-    # full_response = ''
-    # for item in output:
-    # full_response += item
+    full_response = ''
+    for item in output:
+        full_response += item
 
-    # print(full_response)
+    print(full_response)
     return full_response
 
 
